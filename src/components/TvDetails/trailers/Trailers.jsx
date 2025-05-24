@@ -1,7 +1,7 @@
 import ReactPlayer from "react-player";
 import { useEffect, useState } from "react";
-import { ApiCall } from "../../../utils/Api.js";
-import "./Trailers.css"
+import { ApiCall } from "../../../api/api.js";
+import "./Trailers.css";
 const Trailers = (props) => {
   let obj = props;
   let TvShowid = obj.tvshowid;
@@ -18,7 +18,10 @@ const Trailers = (props) => {
   }, [TvShowid]);
 
   const trailerObject =
-    trailer && trailer.filter((Element) => (Element.type === "Trailer" || Element.type === "clip"));
+    trailer &&
+    trailer.filter(
+      (Element) => Element.type === "Trailer" || Element.type === "clip"
+    );
 
   return (
     <div className="trailer">

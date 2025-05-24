@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Movies_List_Section.css";
-import { ApiCall } from "../../../utils/Api";
+import { ApiCall } from "../../../api/api";
 import { NavLink } from "react-router-dom";
 
 const Movies_List_Section = () => {
@@ -14,9 +14,12 @@ const Movies_List_Section = () => {
   };
 
   const newMovies = () => {
-    ApiCall("movie/now_playing").then((response) =>
-      setNewMovies([...response.results])
-    );
+    ApiCall("movie/now_playing").then((response) => {
+      console.log("====================================");
+      console.log(response.results);
+      console.log("====================================");
+      setNewMovies([...response.results]);
+    });
   };
 
   const justAdded = () => {
@@ -29,7 +32,8 @@ const Movies_List_Section = () => {
     topMovies();
     newMovies();
     justAdded();
-  },  []);
+  }, []);
+
   return (
     <div className="top-movies-section">
       <div className="top-10-Movies">

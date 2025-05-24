@@ -1,6 +1,6 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import CommonSectionTvShows from "../CommonSection/CommonSectionTvShows";
-import { ApiCall } from "../../utils/Api";
+import { ApiCall } from "../../api/api";
 import { useEffect, useState } from "react";
 import "./TvShows.css";
 import Pagination from "@mui/material/Pagination";
@@ -12,12 +12,13 @@ const TvShows = () => {
   const [TvData, setTvData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const Apicall = () => {
-    ApiCall(`discover/tv?page=${currentPage}&with_genres=${value.id}`).then((Response) => {
-      setTvData([...Response.results]);
-      setTotalPages(Response.total_pages);
-    });
+    ApiCall(`discover/tv?page=${currentPage}&with_genres=${value.id}`).then(
+      (Response) => {
+        setTvData([...Response.results]);
+        setTotalPages(Response.total_pages);
+      }
+    );
   };
-  
 
   const total_pages = () => {
     ApiCall(`discover/tv?with_genres=${value.id}`).then((Response) => {
@@ -26,21 +27,15 @@ const TvShows = () => {
     });
   };
 
-  
   useEffect(() => {
-    total_pages()
-    Apicall(); 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  } , [value.id])
+    total_pages();
+    Apicall();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value.id]);
   useEffect(() => {
-    Apicall(); 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage]); 
-
-
-  
-
-
+    Apicall();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage]);
 
   const handleChange = (event, pageNumber) => {
     setCurrentPage(pageNumber);
@@ -61,7 +56,7 @@ const TvShows = () => {
         </Stack>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default TvShows;

@@ -1,9 +1,9 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Crousal.css";
-import { ApiCall } from "../../../utils/Api";
+import { ApiCall } from "../../../api/api";
 import { NavLink } from "react-router-dom";
 
 function SampleNextArrow(props) {
@@ -104,26 +104,32 @@ function Crousal() {
   return (
     <div className="slider-container">
       <Slider {...settings}>
-      { (movieData) ? movieData.map((movie) => (
-          <NavLink to={`/movieDetail/${movie.id}`} key={movie.id}>
-            <div >
-            <div
-              className="inner"
-              style={{
-                backgroundImage: `url('https://image.tmdb.org/t/p/original/${movie.poster_path}')`,
-              }}
-            >
-              <div className="blacktint">
-                <p className="moviename">{movie.title}</p>
-                <div className="rating">
-                  <p>⭐</p>
-                  <p className="score">{(movie.vote_average) ? Number(movie.vote_average).toFixed(1) : ""}</p>
+        {movieData
+          ? movieData.map((movie) => (
+              <NavLink to={`/movieDetail/${movie.id}`} key={movie.id}>
+                <div>
+                  <div
+                    className="inner"
+                    style={{
+                      backgroundImage: `url('https://image.tmdb.org/t/p/original/${movie.poster_path}')`,
+                    }}
+                  >
+                    <div className="blacktint">
+                      <p className="moviename">{movie.title}</p>
+                      <div className="rating">
+                        <p>⭐</p>
+                        <p className="score">
+                          {movie.vote_average
+                            ? Number(movie.vote_average).toFixed(1)
+                            : ""}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          </NavLink>
-        )) : ""}
+              </NavLink>
+            ))
+          : ""}
       </Slider>
     </div>
   );

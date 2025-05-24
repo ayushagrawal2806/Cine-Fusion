@@ -1,7 +1,7 @@
 import ReactPlayer from "react-player";
 import { useEffect, useState } from "react";
-import { ApiCall } from "../../../utils/Api.js";
-import "./Trailers.css"
+import { ApiCall } from "../../../api/api";
+import "./Trailers.css";
 const Trailers = (props) => {
   let obj = props;
   let Movieid = obj.movieid;

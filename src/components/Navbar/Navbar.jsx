@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 
 import "./Navbar.css";
-import { ApiCall } from "../../utils/Api";
+import { ApiCall } from "../../api/api";
 import { IoMdArrowDropdown, IoMdSearch } from "react-icons/io";
 import { FaBars } from "react-icons/fa6";
 import { NavLink } from "react-router-dom";
@@ -24,15 +24,12 @@ const Navbar = () => {
     const response = await ApiCall("genre/tv/list");
     setTvValue([...response.genres]);
   };
-  
 
   useEffect(() => {
     call();
     tvShow();
   }, []);
 
-  
-  
   return (
     <div className="navbar-cont">
       <div className="navbar">
@@ -66,7 +63,7 @@ const Navbar = () => {
               >
                 <NavLink
                   to={`/movies/${"Featured Movies"}`}
-                  className="navlink" 
+                  className="navlink"
                 >
                   Featured Movies
                 </NavLink>

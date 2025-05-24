@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ApiCall } from "../../../utils/Api";
+import { ApiCall } from "../../../api/api";
 import "./RelatedMovies.css";
 import { NavLink } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";

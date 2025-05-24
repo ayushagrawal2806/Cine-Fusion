@@ -1,10 +1,10 @@
 import { NavLink, useParams } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import loader from "../../assets/loadingold.svg";
-import { ApiCall } from "../../utils/Api.js";
+import { ApiCall } from "../../api/api.js";
 import "./MovieDetails.css";
 
-import {useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import WatchProviders from "./watchProviders/watchProviders.jsx";
 import Trailers from "./trailers/Trailers.jsx";
 import Photos from "./Photos/Photos.jsx";
@@ -29,7 +29,8 @@ const MovieDetail = () => {
   };
 
   let calculateHours = movieData && Math.floor(Number(movieData.runtime) / 60);
-  let calculateMin = movieData && Number(movieData.runtime) - calculateHours * 60;
+  let calculateMin =
+    movieData && Number(movieData.runtime) - calculateHours * 60;
 
   useEffect(() => {
     MovieData();
@@ -65,14 +66,20 @@ const MovieDetail = () => {
                 <h1 className="movieName">
                   {movieData && (movieData.title || movieData.name)}{" "}
                   <span>
-                    {movieData && `(${(movieData.release_date) ?movieData.release_date.slice(0, 4) : ""})`}
+                    {movieData &&
+                      `(${
+                        movieData.release_date
+                          ? movieData.release_date.slice(0, 4)
+                          : ""
+                      })`}
                     {/* movieData.release_date && */}
                   </span>
                 </h1>
                 <p className="tagline">{movieData && movieData.tagline}</p>
                 <div className="movie-genre">
                   <p>Genre:</p>
-                  {movieData && movieData.genres &&
+                  {movieData &&
+                    movieData.genres &&
                     movieData.genres.map((Element, index) => (
                       <NavLink
                         to={`/genre/${Element.id}/${Element.name}`}
@@ -102,7 +109,8 @@ const MovieDetail = () => {
                 <p className="language">
                   Language:
                   <span>
-                    {movieData && (movieData.spoken_languages) &&
+                    {movieData &&
+                      movieData.spoken_languages &&
                       movieData.spoken_languages.map((Element, index) => (
                         <span key={index}>{` ${Element.name}${
                           index != movieData.spoken_languages.length - 1
@@ -115,7 +123,9 @@ const MovieDetail = () => {
                 <p className="productionCompany">
                   Production Company:
                   <span>
-                    {movieData && (movieData.production_companies) && (movieData.production_companies.length) ?
+                    {movieData &&
+                    movieData.production_companies &&
+                    movieData.production_companies.length ? (
                       movieData.production_companies.map((Element, index) =>
                         index < 1 ? (
                           <span key={index}>{` ${Element.name}`}</span>
@@ -123,14 +133,17 @@ const MovieDetail = () => {
                           ""
                         )
                       )
-                    : <span> Not Found</span>
-                    }
+                    ) : (
+                      <span> Not Found</span>
+                    )}
                   </span>
                 </p>
                 <p className="ProductionCountry">
                   Production Country:
                   <span>
-                    {movieData && (movieData.production_countries) && (movieData.production_countries.length) ?
+                    {movieData &&
+                    movieData.production_countries &&
+                    movieData.production_countries.length ? (
                       movieData.production_countries.map((Element, index) =>
                         index < 1 ? (
                           <span key={index}>{` ${Element.name}`}</span>
@@ -138,13 +151,16 @@ const MovieDetail = () => {
                           ""
                         )
                       )
-                    : <span> Not Found</span>
-                    }
+                    ) : (
+                      <span> Not Found</span>
+                    )}
                   </span>
                 </p>
                 <p className="Director">
                   Director:
-                  {castcrewData && (castcrewData.crew) && (castcrewData.crew.length) ? 
+                  {castcrewData &&
+                  castcrewData.crew &&
+                  castcrewData.crew.length ? (
                     castcrewData.crew.map((Element, index) =>
                       Element.job === "Director" ? (
                         <span key={index}> {Element.name}</span>
@@ -152,8 +168,9 @@ const MovieDetail = () => {
                         ""
                       )
                     )
-                    : <span> Not Found</span>
-                  }
+                  ) : (
+                    <span> Not Found</span>
+                  )}
                 </p>
               </div>
             </div>
@@ -178,15 +195,19 @@ const MovieDetail = () => {
             <div className="heading">
               <h2>Summary</h2>
             </div>
-            <p>{movieData && (movieData.overview) ? movieData.overview : "Overview is not available"}</p>
+            <p>
+              {movieData && movieData.overview
+                ? movieData.overview
+                : "Overview is not available"}
+            </p>
           </div>
           <Trailers movieid={Movieid} moviedata={movieData} />
           <WatchProviders movieid={Movieid} moviedata={movieData} />
-          <Photos movieid={Movieid} moviedata={movieData}/>
-          <CastCrew castcrewdata = {castcrewData}/>
+          <Photos movieid={Movieid} moviedata={movieData} />
+          <CastCrew castcrewdata={castcrewData} />
         </div>
         <div className="related-movies">
-          <RelatedMovies movieid={Movieid}/>
+          <RelatedMovies movieid={Movieid} />
         </div>
       </div>
     </div>

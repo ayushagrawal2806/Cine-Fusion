@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import CommonSectionMovie from "../CommonSection/CommonSectionMovies";
-import { ApiCall } from "../../utils/Api";
+import { ApiCall } from "../../api/api";
 import { useEffect, useState } from "react";
 import "./Movies.css";
 import Pagination from "@mui/material/Pagination";
@@ -55,7 +55,7 @@ const Movies = () => {
       <div className="pagination">
         <Stack spacing={200}>
           <Pagination
-            count={ totalPages > 500 ? 500 :totalPages}
+            count={totalPages > 500 ? 500 : totalPages}
             page={currentPage}
             variant="outlined"
             shape="rounded"

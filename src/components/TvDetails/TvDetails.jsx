@@ -1,9 +1,9 @@
 import { NavLink, useParams } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import loader from "../../assets/loadingold.svg";
-import { ApiCall } from "../../utils/Api.js";
-import {useEffect, useState } from "react";
-import "./TvDetails.css"
+import { ApiCall } from "../../api/api.js";
+import { useEffect, useState } from "react";
+import "./TvDetails.css";
 
 import WatchProviders from "./watchProviders/watchProviders.jsx";
 import Trailers from "./trailers/Trailers.jsx";
@@ -12,14 +12,14 @@ import CastCrew from "./CastCrewDetails/CastCrew.jsx";
 import RelatedMovies from "./RelatedMovies/RelatedMovies.jsx";
 
 const TvDetails = () => {
-  const {TvShowid} = useParams();
+  const { TvShowid } = useParams();
   const [tvshowData, setTvShowData] = useState(null);
   const [castcrewData, setCastCrewData] = useState(null);
 
   const ImageUrl = "https://image.tmdb.org/t/p/original/";
   const TvShowData = () => {
     ApiCall(`tv/${TvShowid}`).then((Response) =>
-    setTvShowData({ ...Response })
+      setTvShowData({ ...Response })
     );
   };
   const cast_CrewData = () => {
@@ -32,8 +32,6 @@ const TvDetails = () => {
     cast_CrewData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [TvShowid]);
-
-  
 
   return (
     <div className="tvshowDetails">
@@ -87,12 +85,18 @@ const TvDetails = () => {
                 <p className="userRating">
                   User Rating:{" "}
                   <span>
-                    {tvshowData && Number(tvshowData.vote_average).toFixed(1)}/10
-                    from {tvshowData && tvshowData.vote_count} ratings
+                    {tvshowData && Number(tvshowData.vote_average).toFixed(1)}
+                    /10 from {tvshowData && tvshowData.vote_count} ratings
                   </span>
                 </p>
-                <p className="number_of_episodes">Total Episodes: <span>{tvshowData && tvshowData.number_of_episodes}</span></p>
-                <p className="number_of_seasons">Total Seasons: <span>{tvshowData && tvshowData.number_of_seasons}</span></p>
+                <p className="number_of_episodes">
+                  Total Episodes:{" "}
+                  <span>{tvshowData && tvshowData.number_of_episodes}</span>
+                </p>
+                <p className="number_of_seasons">
+                  Total Seasons:{" "}
+                  <span>{tvshowData && tvshowData.number_of_seasons}</span>
+                </p>
 
                 <p className="language">
                   Language:
@@ -110,7 +114,7 @@ const TvDetails = () => {
                 <p className="productionCompany">
                   Production Company:
                   <span>
-                    {tvshowData && (tvshowData.production_companies.length) ?
+                    {tvshowData && tvshowData.production_companies.length ? (
                       tvshowData.production_companies.map((Element, index) =>
                         index < 1 ? (
                           <span key={index}>{` ${Element.name}`}</span>
@@ -118,14 +122,15 @@ const TvDetails = () => {
                           ""
                         )
                       )
-                    : <span> Not Found</span>
-                    }
+                    ) : (
+                      <span> Not Found</span>
+                    )}
                   </span>
                 </p>
                 <p className="ProductionCountry">
                   Production Country:
                   <span>
-                    {tvshowData && (tvshowData.production_countries.length) ?
+                    {tvshowData && tvshowData.production_countries.length ? (
                       tvshowData.production_countries.map((Element, index) =>
                         index < 1 ? (
                           <span key={index}>{` ${Element.name}`}</span>
@@ -133,23 +138,24 @@ const TvDetails = () => {
                           ""
                         )
                       )
-                    : <span> Not Found</span>
-                    }
+                    ) : (
+                      <span> Not Found</span>
+                    )}
                   </span>
                 </p>
                 <p className="Director">
                   Director:
-                  {castcrewData && (castcrewData.crew.length)?
-                  
+                  {castcrewData && castcrewData.crew.length ? (
                     castcrewData.crew.map((Element, index) =>
-                      (Element.job === "Director") ? (
+                      Element.job === "Director" ? (
                         <span key={index}> {Element.name}</span>
                       ) : (
                         ""
                       )
                     )
-                    : <span> Not Found</span>
-                  }
+                  ) : (
+                    <span> Not Found</span>
+                  )}
                 </p>
               </div>
             </div>
@@ -168,26 +174,29 @@ const TvDetails = () => {
         </div>
       </div>
 
-
       <div className="summary_related">
         <div className="videos-pictures-overview">
           <div className="summary">
             <div className="heading">
               <h2>Summary</h2>
             </div>
-            <p>{tvshowData && (tvshowData.overview) ? tvshowData.overview : "Overview is not available"}</p>
+            <p>
+              {tvshowData && tvshowData.overview
+                ? tvshowData.overview
+                : "Overview is not available"}
+            </p>
           </div>
           <Trailers tvshowid={TvShowid} tvshowdata={tvshowData} />
           <WatchProviders tvshowid={TvShowid} tvshowdata={tvshowData} />
-          <Photos tvshowid={TvShowid} tvshowdata={tvshowData}/>
-          <CastCrew castcrewdata = {castcrewData}/>
+          <Photos tvshowid={TvShowid} tvshowdata={tvshowData} />
+          <CastCrew castcrewdata={castcrewData} />
         </div>
         <div className="related-movies">
-          <RelatedMovies tvshowid={TvShowid}/>
+          <RelatedMovies tvshowid={TvShowid} />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default TvDetails;
