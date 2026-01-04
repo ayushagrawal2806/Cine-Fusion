@@ -45,6 +45,13 @@ const Movies = () => {
     }
   }, [url, currentPage]);
 
+useEffect(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}, [currentPage, value.name]);
+
   const handleChange = (event, pageNumber) => {
     setCurrentPage(pageNumber);
   };
